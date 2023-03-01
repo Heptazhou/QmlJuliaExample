@@ -1,3 +1,5 @@
+@static @isdefined(QML) || Pkg.activate(@__DIR__)
+
 # This example show how to update the GUI during a long-running simulation
 using Test
 using QML

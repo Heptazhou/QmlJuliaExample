@@ -1,3 +1,5 @@
+@static @isdefined(QML) || Pkg.activate(@__DIR__)
+
 # MUST disable threading in Qt
 ENV["QSG_RENDER_LOOP"] = "basic"
 

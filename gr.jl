@@ -1,3 +1,5 @@
+@static @isdefined(QML) || Pkg.activate(@__DIR__)
+
 ENV["QSG_RENDER_LOOP"] = "basic" # multithreading in Qt must be off
 using CxxWrap # for safe_cfunction
 using QML

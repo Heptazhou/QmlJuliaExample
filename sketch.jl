@@ -1,3 +1,5 @@
+@static @isdefined(QML) || Pkg.activate(@__DIR__)
+
 using QML
 using Qt5QuickControls2_jll
 using Observables

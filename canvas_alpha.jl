@@ -1,3 +1,5 @@
+@static @isdefined(QML) || Pkg.activate(@__DIR__)
+
 ENV["QSG_RENDER_LOOP"] = "basic"
 
 using QML

@@ -1,3 +1,5 @@
+@static @isdefined(QML) || Pkg.activate(@__DIR__)
+
 using Test
 using QML
 using Qt5QuickControls_jll
