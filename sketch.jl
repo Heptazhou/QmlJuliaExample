@@ -12,13 +12,13 @@ qmlfile = joinpath(dirname(Base.source_path()), "qml", "sketch.qml")
 const positionskip = 10
 const nb_moves = Ref(0)
 on(x) do px
-  if nb_moves[] % positionskip == 0
-    println("On position: ($px, $(y[]))")
-  end
-  nb_moves[] += 1
+	if nb_moves[] % positionskip == 0
+		println("On position: ($px, $(y[]))")
+	end
+	nb_moves[] += 1
 end
 
-loadqml(qmlfile, position=JuliaPropertyMap("x" => x, "y" =>y))
+loadqml(qmlfile, position = JuliaPropertyMap("x" => x, "y" => y))
 exec()
 
 """

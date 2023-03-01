@@ -7,7 +7,7 @@ fromfunction() = "From function call"
 @qmlfunction fromfunction
 
 # All keyword arguments to load are added as context properties on the QML side
-loadqml(qmlfile, fromcontext="From context property")
+loadqml(qmlfile, fromcontext = "From context property")
 exec()
 
 """

@@ -11,5 +11,5 @@ using GR
 GR.inline()
 
 # Include from the REPL, and then add plotting commands, e.g:
-plot(rand(10,2))
+plot(rand(10, 2))
 

@@ -9,29 +9,29 @@ counter = 0
 const oldcounter = Observable(0)
 
 function increment_counter()
-  global counter, oldcounter
-  oldcounter[] = counter
-  counter += 1
+	global counter, oldcounter
+	oldcounter[] = counter
+	counter += 1
 end
 
 function counter_value()
-  global counter
-  return counter
+	global counter
+	return counter
 end
 
 const bg_counter = Observable(0)
 
 function counter_slot()
-  global bg_counter
-  bg_counter[] += 1
+	global bg_counter
+	bg_counter[] += 1
 end
 
 # This slows down the bg_counter display. It counts a *lot* faster this way, proving the main overhead is in the GUI update and not in the callback mechanism to Julia
 const bg_counter_slow = Observable(0)
 on(bg_counter) do newcount
-  if newcount % 100 == 0
-    bg_counter_slow[] = newcount
-  end
+	if newcount % 100 == 0
+		bg_counter_slow[] = newcount
+	end
 end
 
 @qmlfunction counter_slot hello increment_counter uppercase string
