@@ -58,13 +58,13 @@ ApplicationWindow {
       JuliaCanvas {
         anchors.fill: parent
         id: circle_canvas
-        paintFunction: circle_cfunction  
+        paintFunction: circle_cfunction
       }
 
       JuliaCanvas {
         anchors.fill: parent
         id: square_canvas
-        paintFunction: square_cfunction  
+        paintFunction: square_cfunction
       }
     }
   }

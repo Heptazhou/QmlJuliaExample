@@ -16,7 +16,7 @@ f = Observable(1.0)
 A = Observable(1.0)
 
 # Arguments here need to be the "reference types", hence the "Ref" suffix
-function paint(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})  
+function paint(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
   ENV["GKS_CONID"] = split(repr(p.cpp_object), "@")[2]
 
   dev = device(p[])[]
@@ -39,3 +39,4 @@ exec()
 """
 Example of GR.jl integration
 """
+

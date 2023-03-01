@@ -35,3 +35,4 @@ loadqml(joinpath(dirname(Base.source_path()), "qml", "checkboxes.qml"))
 exec()
 
 return
+

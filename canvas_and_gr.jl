@@ -20,7 +20,7 @@ frequency = Observable(-1.0)
 diameter = Observable(-1.0)
 description_text = Observable("")
 
-function paint_sin_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})  
+function paint_sin_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
     ENV["GKS_CONID"] = split(repr(p.cpp_object), "@")[2]
     dev = device(p[])[]
     r = effectiveDevicePixelRatio(window(item[])[])
@@ -37,7 +37,7 @@ function paint_sin_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
     return
 end
 
-function paint_cos_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})  
+function paint_cos_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
     ENV["GKS_CONID"] = split(repr(p.cpp_object), "@")[2]
     dev = device(p[])[]
     r = effectiveDevicePixelRatio(window(item[])[])
@@ -51,7 +51,7 @@ function paint_cos_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
     return
 end
 
-################## canvas ########################    
+################## canvas ########################
 # fix callback arguments (TODO: macro this?)
 function paint_canvas(buffer::Array{UInt32, 1},
                       width32::Int32,
@@ -101,7 +101,7 @@ onany(amplitude, frequency, invert_sin, diameter) do amp, freq, inv, dia
     dia  = round(dia, digits=2)
 
     description_text[]="""<table>
-    
+
 <tr> <td>amp<\td> <td>$amp</b> </tr>
 <tr> <td>freq<\td> <td>$freq</b> </tr>
 <tr> <td>diameter<\td> <td>$dia</b> </tr>
@@ -137,3 +137,4 @@ on(diameter) do d
 end
 
 exec()
+

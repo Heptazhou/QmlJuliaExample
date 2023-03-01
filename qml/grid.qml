@@ -15,7 +15,7 @@ ApplicationWindow {
     columns: cols // from Julia
     width: appRoot.width
     height: appRoot.height
-    
+
     Repeater { // Repeat for each emoji
       model: emojiModel
 

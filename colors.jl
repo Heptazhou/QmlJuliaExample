@@ -9,3 +9,4 @@ return
 """
 Example for using a mouse area and for implementing animations in QML.
 """
+

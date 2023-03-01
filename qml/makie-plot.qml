@@ -33,7 +33,7 @@ ApplicationWindow {
         id: pointDelegate
         width: 9
         height: 9
-        
+
         // The point marker itself
         Rectangle {
           id: pointMarker

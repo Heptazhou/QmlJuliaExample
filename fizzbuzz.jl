@@ -39,3 +39,4 @@ end
 qmlfile = joinpath(dirname(Base.source_path()), "qml", "fizzbuzz.qml")
 loadqml(qmlfile, fizzbuzz=JuliaPropertyMap("message" => Observable(""), "count" => 0, "success" => false))
 exec()
+

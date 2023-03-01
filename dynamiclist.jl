@@ -44,3 +44,4 @@ println("Your fruits:")
 for f in fruitlist
   println("  $(f.name), \$$(f.cost)")
 end
+

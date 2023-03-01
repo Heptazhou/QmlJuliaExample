@@ -30,7 +30,7 @@ function dostep(s::Simulation)
   if isfinished(s)
     error("Simulation is finished, can't step anymore")
   end
-  
+
   if s.stepsize != 0
     sleep(s.stepsize/1000)
   end
@@ -152,3 +152,4 @@ loadqml(
 exec()
 
 println("Simuation was at $(progress[]) in the end.")
+

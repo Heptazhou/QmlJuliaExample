@@ -29,7 +29,7 @@ ApplicationWindow {
         value: 1.0
         minimumValue: 0.1
         maximumValue: 5.0
-        onValueChanged: { 
+        onValueChanged: {
           parameters.amplitude = value;
           painter.update()
         }
@@ -45,7 +45,7 @@ ApplicationWindow {
         value: 10.0
         minimumValue: 1.0
         maximumValue: 50.
-        onValueChanged: { 
+        onValueChanged: {
           parameters.frequency = value;
           painter.update()
         }

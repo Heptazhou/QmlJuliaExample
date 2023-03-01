@@ -15,7 +15,7 @@ ApplicationWindow {
     width: appRoot.width
     height: appRoot.height
     color: "darkgreen"
-    
+
     Repeater { // Repeat for each emoji
       anchors.fill: parent
       model: emojiModel

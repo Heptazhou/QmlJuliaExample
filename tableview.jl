@@ -52,3 +52,4 @@ loadqml(qml_file, properties=JuliaPropertyMap("years" => years), nuclidesModel=n
 
 # Run the application
 exec()
+

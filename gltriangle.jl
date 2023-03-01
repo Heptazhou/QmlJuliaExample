@@ -111,3 +111,4 @@ loadqml(joinpath(dirname(@__FILE__), "qml", "gltriangle.qml"),
     cornersModel=ListModel(corners),
     render_triangle=@safe_cfunction(render, Cvoid, ()))
 exec()
+

@@ -61,3 +61,4 @@ loadqml(qmlfile,
      square_cfunction = CxxWrap.@safe_cfunction(paint_square, Cvoid, (Array{UInt32,1}, Int32, Int32)))
 
 exec()
+

@@ -68,7 +68,7 @@ ApplicationWindow {
 		Layout.minimumHeight: 100
 		paintFunction: paint_canvas_wrapped
 	    }
-	}	    
+	}
     }
     JuliaSignals {
 	signal updateCanvas()

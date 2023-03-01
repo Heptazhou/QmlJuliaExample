@@ -10,7 +10,6 @@ const qmlfile = joinpath(dirname(Base.source_path()), "qml", "canvas.qml")
 
 diameter = Observable(-1.0)
 
-
 # fix callback arguments (TODO: macro this?)
 function paint_circle(buffer::Array{UInt32, 1},
                       width32::Int32,
@@ -43,7 +42,8 @@ end
 
 loadqml(qmlfile,
      parameters=JuliaPropertyMap("diameter" => diameter),
-     paint_cfunction = CxxWrap.@safe_cfunction(paint_circle, Cvoid, 
+     paint_cfunction = CxxWrap.@safe_cfunction(paint_circle, Cvoid,
                                                (Array{UInt32,1}, Int32, Int32)))
 
 exec()
+

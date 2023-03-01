@@ -50,10 +50,10 @@ ApplicationWindow {
 
     ColumnLayout {
       Layout.alignment: Qt.AlignCenter
-    
+
       RowLayout {
         Layout.alignment: Qt.AlignCenter
-        
+
         Text {
           text: "Side:"
         }

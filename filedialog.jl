@@ -22,3 +22,4 @@ end
 
 loadqml(joinpath(dirname(Base.source_path()), "qml", "filedialog.qml"))
 exec()
+

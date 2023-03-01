@@ -42,3 +42,4 @@ loadqml(qml_file)
 
 # Run the application
 exec()
+

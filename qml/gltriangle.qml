@@ -25,7 +25,6 @@ ApplicationWindow {
         width: 9
         height: 9
         color: "black"
-        
 
         Component.onCompleted: {
           x = (cx+1)/2*appRoot.width-width/2
