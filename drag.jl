@@ -2,6 +2,6 @@ using QML
 using Qt5QuickControls_jll
 
 @qmlfunction println
-loadqml(joinpath(dirname(@__FILE__), "qml", "drag.qml"))
+loadqml(joinpath(@__DIR__, "qml", "drag.qml"))
 exec()
 

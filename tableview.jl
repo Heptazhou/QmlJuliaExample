@@ -4,8 +4,8 @@ using Qt5QuickControls_jll
 using Observables
 
 struct Nuclide
-	name::String
-	values::Dict{Int, Float64}
+	name   :: String
+	values :: Dict{Int, Float64}
 end
 
 const years = Observable(collect(Cint, 2016:2025)) # exposed as context property
@@ -16,7 +16,7 @@ addrole(nuclidesModel, "name", n -> n.name)
 # Seems roles can't start with a number
 add_year_role(model, year::Integer) = addrole(model, "y" * string(year), n -> round(n.values[year]; digits = 2))
 
-# add year roles manually:
+# add year roles manually
 for y in years[]
 	add_year_role(nuclidesModel, y)
 end
@@ -47,7 +47,7 @@ function delyears!(model, nuclides, years)
 end
 
 # Load QML after setting context properties, to avoid errors on initialization
-qml_file = joinpath(dirname(@__FILE__), "qml", "tableview.qml")
+qml_file = joinpath(@__DIR__, "qml", "tableview.qml")
 loadqml(qml_file, properties = JuliaPropertyMap("years" => years), nuclidesModel = nuclidesModel)
 
 # Run the application

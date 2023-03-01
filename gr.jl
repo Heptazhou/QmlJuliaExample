@@ -5,12 +5,12 @@ using Qt5QuickControls_jll
 using Observables
 
 # Set up plots with GR so QPainter can be used directly
-ENV["GKSwstype"] = 381
+ENV["GKSwstype"]      = 381
 ENV["GKS_QT_VERSION"] = 5
 using Plots
 gr(show = true)
 
-const qmlfile = joinpath(dirname(Base.source_path()), "qml", "gr.qml")
+const qmlfile = joinpath(@__DIR__, "qml", "gr.qml")
 
 f = Observable(1.0)
 A = Observable(1.0)
@@ -28,12 +28,13 @@ function paint(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
 
 	plot(x, y, ylims = (-5, 5), size = (w, h))
 
-	return
+	nothing
 end
 
 loadqml(qmlfile,
 	paint_cfunction = @safe_cfunction(paint, Cvoid, (CxxPtr{QPainter}, CxxPtr{JuliaPaintedItem})),
-	parameters = JuliaPropertyMap("frequency" => f, "amplitude" => A))
+	parameters = JuliaPropertyMap("frequency" => f, "amplitude" => A),
+)
 exec()
 
 """

@@ -16,7 +16,7 @@ end
 
 function counter_value()
 	global counter
-	return counter
+	counter
 end
 
 const bg_counter = Observable(0)
@@ -37,10 +37,16 @@ end
 @qmlfunction counter_slot hello increment_counter uppercase string
 
 # absolute path in case working dir is overridden
-qml_file = joinpath(dirname(@__FILE__), "qml", "gui.qml")
+qml_file = joinpath(@__DIR__, "qml", "gui.qml")
 
 # Load the QML file
-loadqml(qml_file, guiproperties = JuliaPropertyMap("timer" => QTimer(), "oldcounter" => oldcounter, "bg_counter" => bg_counter_slow))
+loadqml(qml_file,
+	guiproperties = JuliaPropertyMap(
+		"timer"      => QTimer(),
+		"oldcounter" => oldcounter,
+		"bg_counter" => bg_counter_slow,
+	),
+)
 
 # Run the application
 exec()

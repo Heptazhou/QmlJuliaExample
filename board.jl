@@ -3,11 +3,11 @@ using Qt5QuickControls_jll
 
 # Represents the state related to a single emoji
 mutable struct EmojiState
-	emoji::String
-	numclicks::Float64
-	bgcolor::String
-	ex::Float64
-	ey::Float64
+	emoji     :: String
+	numclicks :: Float64
+	bgcolor   :: String
+	ex        :: Float64
+	ey        :: Float64
 end
 
 # Build a list of emoji, positioned randomly
@@ -21,7 +21,7 @@ emojiModel = ListModel(emoji) # passed to QML
 cols = 3
 
 # path to the QML file
-qml_file = joinpath(dirname(@__FILE__), "qml", "board.qml")
+qml_file = joinpath(@__DIR__, "qml", "board.qml")
 
 # create the app, with cols and emojiModel exposed as QML context properties
 loadqml(qml_file, cols = cols, emojiModel = emojiModel)

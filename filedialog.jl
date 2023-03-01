@@ -5,9 +5,9 @@ function singlefile(uri)
 	uri_s = QString(uri)
 	if isempty(uri_s)
 		println("multiple files were selected")
-		return
+	else
+		println("selected single file $uri_s")
 	end
-	println("selected single file $uri_s")
 end
 
 function multifile(uri_list)
@@ -20,6 +20,6 @@ end
 
 @qmlfunction singlefile multifile
 
-loadqml(joinpath(dirname(Base.source_path()), "qml", "filedialog.qml"))
+loadqml(joinpath(@__DIR__, "qml", "filedialog.qml"))
 exec()
 

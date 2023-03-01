@@ -7,17 +7,17 @@ using Plots
 using ColorTypes
 using CxxWrap # for safe_cfunction, CxxPtr
 
-const qmlfile = joinpath(dirname(Base.source_path()), "qml", "canvas_and_gr.qml")
+const qmlfile = joinpath(@__DIR__, "qml", "canvas_and_gr.qml")
 
-ENV["GKSwstype"] = "use_default"
-ENV["GKS_WSTYPE"] = 381
+ENV["GKSwstype"]      = "use_default"
+ENV["GKS_WSTYPE"]     = 381
 ENV["GKS_QT_VERSION"] = 5
 gr(show = true)
 
-invert_sin = Observable(-1)
-amplitude = Observable(-1.0)
-frequency = Observable(-1.0)
-diameter = Observable(-1.0)
+invert_sin       = Observable(-1)
+amplitude        = Observable(-1.0)
+frequency        = Observable(-1.0)
+diameter         = Observable(-1.0)
 description_text = Observable("")
 
 function paint_sin_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
@@ -34,7 +34,7 @@ function paint_sin_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
 
 	plot(x, y, ylims = (-5, 5), size = (w, h))
 
-	return
+	nothing
 end
 
 function paint_cos_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
@@ -48,18 +48,16 @@ function paint_cos_plot(p::CxxPtr{QPainter}, item::CxxPtr{JuliaPaintedItem})
 
 	plot(x, y, ylims = (-5, 5), size = (w, h))
 
-	return
+	nothing
 end
 
 ################## canvas ########################
 # fix callback arguments (TODO: macro this?)
-function paint_canvas(buffer::Array{UInt32, 1},
-	width32::Int32,
-	height32::Int32)
-	width::Int = width32
+function paint_canvas(buffer::Vector{UInt32}, width32::Int32, height32::Int32)
+	width::Int  = width32
 	height::Int = height32
-	buffer = reshape(buffer, width, height)
-	buffer = reinterpret(ARGB32, buffer)
+	buffer      = reshape(buffer, width, height)
+	buffer      = reinterpret(ARGB32, buffer)
 	paint_circle(buffer)
 end
 
@@ -73,9 +71,9 @@ function paint_circle(buffer)
 	for x in 1:width
 		for y in 1:height
 			if (x - center_x)^2 + (y - center_y)^2 < rad2
-				buffer[x, y] = ARGB32(1, 0, 0, 1) #red
+				buffer[x, y] = ARGB32(1, 0, 0, 1) # red
 			else
-				buffer[x, y] = ARGB32(0, 0, 0, 1) #black
+				buffer[x, y] = ARGB32(0, 0, 0, 1) # black
 			end
 			if x < 10
 				buffer[x, y] = ARGB32(1, 0, 0, 1) # red
@@ -92,7 +90,6 @@ function paint_circle(buffer)
 			end
 		end
 	end
-	return
 end
 
 onany(amplitude, frequency, invert_sin, diameter) do amp, freq, inv, dia
@@ -100,11 +97,11 @@ onany(amplitude, frequency, invert_sin, diameter) do amp, freq, inv, dia
 	freq = round(freq, digits = 2)
 	dia  = round(dia, digits = 2)
 
-	description_text[] = """<table>
-
-	<tr> <td>amp<\td> <td>$amp</b> </tr>
-	<tr> <td>freq<\td> <td>$freq</b> </tr>
-	<tr> <td>diameter<\td> <td>$dia</b> </tr>
+	description_text[] = """
+	<table>
+		<tr> <td>amp</td> <td>$amp</b> </tr>
+		<tr> <td>freq</td> <td>$freq</b> </tr>
+		<tr> <td>diameter</td> <td>$dia</b> </tr>
 	</table>"""
 
 	if inv == true
@@ -118,13 +115,12 @@ loadqml(qmlfile,
 		"amplitude"        => amplitude,
 		"frequency"        => frequency,
 		"diameter"         => diameter,
-		"description_text" => description_text),
-	paint_sin_plot_wrapped = @safe_cfunction(paint_sin_plot, Cvoid,
-		(CxxPtr{QPainter}, CxxPtr{JuliaPaintedItem})),
-	paint_cos_plot_wrapped = @safe_cfunction(paint_cos_plot, Cvoid,
-		(CxxPtr{QPainter}, CxxPtr{JuliaPaintedItem})),
-	paint_canvas_wrapped = @safe_cfunction(paint_canvas, Cvoid,
-		(Array{UInt32, 1}, Int32, Int32))
+		"description_text" => description_text,
+	),
+	#
+	paint_sin_plot_wrapped = @safe_cfunction(paint_sin_plot, Cvoid, (CxxPtr{QPainter}, CxxPtr{JuliaPaintedItem})),
+	paint_cos_plot_wrapped = @safe_cfunction(paint_cos_plot, Cvoid, (CxxPtr{QPainter}, CxxPtr{JuliaPaintedItem})),
+	paint_canvas_wrapped   = @safe_cfunction((paint_canvas), Cvoid, (Vector{UInt32}, Int32, Int32)),
 )
 
 onany(amplitude, frequency, invert_sin) do a, f, i

@@ -15,24 +15,22 @@ checkboxes, that are checked.
 function plot_diagram(param)
 	plot_set = round(Int, param)
 	a = Int64[]
-	if plot_set >= 256; push!(a,8); plot_set-=256; end
-	if plot_set >= 128; push!(a,8); plot_set-=128; end
-	if plot_set >=  64; push!(a,7); plot_set-= 64; end
-	if plot_set >=  32; push!(a,6); plot_set-= 32; end
-	if plot_set >=  16; push!(a,5); plot_set-= 16; end
-	if plot_set >=   8; push!(a,4); plot_set-=  8; end
-	if plot_set >=   4; push!(a,3); plot_set-=  4; end
-	if plot_set >=   2; push!(a,2); plot_set-=  2; end
-	if plot_set >=   1; push!(a,1); plot_set-=  1; end
+	plot_set >= 256 && (push!(a, 8); plot_set -= 256)
+	plot_set >= 128 && (push!(a, 8); plot_set -= 128)
+	plot_set >= 064 && (push!(a, 7); plot_set -= 064)
+	plot_set >= 032 && (push!(a, 6); plot_set -= 032)
+	plot_set >= 016 && (push!(a, 5); plot_set -= 016)
+	plot_set >= 008 && (push!(a, 4); plot_set -= 008)
+	plot_set >= 004 && (push!(a, 3); plot_set -= 004)
+	plot_set >= 002 && (push!(a, 2); plot_set -= 002)
+	plot_set >= 001 && (push!(a, 1); plot_set -= 001)
 	# In the real application you would here call the plotting routine
 	println(a)
-	return 0
+	0
 end
 
 @qmlfunction plot_diagram
 
-loadqml(joinpath(dirname(Base.source_path()), "qml", "checkboxes.qml"))
+loadqml(joinpath(@__DIR__, "qml", "checkboxes.qml"))
 exec()
-
-return
 

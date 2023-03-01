@@ -2,9 +2,9 @@ using QML
 using Qt5QuickControls_jll
 using Observables
 
-qml_file = joinpath(dirname(@__FILE__), "qml", "observable.qml")
+qml_file = joinpath(@__DIR__, "qml", "observable.qml")
 
-const input = Observable(1.0)
+const input  = Observable(1.0)
 const output = Observable(0.0)
 
 on(output) do x

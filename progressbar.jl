@@ -11,29 +11,24 @@ const stepsize = Observable(Cint(0))
 
 # Simple counting "simulation" with its interface
 mutable struct Simulation
-	counter::Int
-	maxcount::Int
-	stepsize::Int
+	counter  :: Int
+	maxcount :: Int
+	stepsize :: Int
 
 	function Simulation()
 		result = new(0, nsteps, stepsize[])
 		on(stepsize) do n
 			result.stepsize = n
 		end
-		return result
+		result
 	end
 end
 
 isfinished(s) = s.counter == s.maxcount
 
 function dostep(s::Simulation)
-	if isfinished(s)
-		error("Simulation is finished, can't step anymore")
-	end
-
-	if s.stepsize != 0
-		sleep(s.stepsize / 1000)
-	end
+	!isfinished(s) || error("Simulation is finished, can't step anymore")
+	s.stepsize ≠ 0 && sleep(s.stepsize / 1000)
 	s.counter += 1
 end
 
@@ -46,13 +41,13 @@ const simulation_types = [
 	("ResumableFunctions", :resumable),
 ]
 
-qmlfile = joinpath(dirname(Base.source_path()), "qml", "progressbar.qml")
+qmlfile = joinpath(@__DIR__, "qml", "progressbar.qml")
 
 # Global state, accessible from QML
-const simulation = Observable{Any}(nothing) # The simulation
-const progress = Observable(0.0) # Simulation progress
+const simulation      = Observable{Any}(nothing) # The simulation
+const progress        = Observable(0.0) # Simulation progress
 const selectedsimtype = Observable(Cint(0)) # Index of the selected simulation type
-const ticks = Observable(Cint(0)) # Number of times the timer has ticked
+const ticks           = Observable(Cint(0)) # Number of times the timer has ticked
 
 on(selectedsimtype) do i
 	setup(simulation, simulation_types[i][2])
@@ -142,12 +137,17 @@ end
 
 simtypes = ListModel(first.(simulation_types))
 
-# All arguments after qmlfile are context properties:
-loadqml(
-	qmlfile,
+# All arguments after qmlfile are context properties
+loadqml(qmlfile,
 	timer = timer,
 	simulationTypes = simtypes,
-	parameters = JuliaPropertyMap("progress" => progress, "ticks" => ticks, "selectedSimType" => selectedsimtype, "stepsize" => stepsize))
+	parameters = JuliaPropertyMap(
+		"progress"        => progress,
+		"ticks"           => ticks,
+		"selectedSimType" => selectedsimtype,
+		"stepsize"        => stepsize,
+	),
+)
 
 exec()
 

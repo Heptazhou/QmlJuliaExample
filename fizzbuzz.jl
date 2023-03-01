@@ -6,9 +6,7 @@ Translation of the FizzBuzz example from http://seanchas116.github.io/ruby-qml/
 """
 
 function do_fizzbuzz(input::AbstractString, fb::AbstractDict)
-	if isempty(input)
-		return
-	end
+	isempty(input) && return
 	i = Int32(0)
 	outputmessage = fb["message"]
 	try
@@ -36,7 +34,7 @@ end
 
 @qmlfunction do_fizzbuzz
 
-qmlfile = joinpath(dirname(Base.source_path()), "qml", "fizzbuzz.qml")
+qmlfile = joinpath(@__DIR__, "qml", "fizzbuzz.qml")
 loadqml(qmlfile, fizzbuzz = JuliaPropertyMap("message" => Observable(""), "count" => 0, "success" => false))
 exec()
 

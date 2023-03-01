@@ -3,9 +3,9 @@ using Qt5QuickControls_jll
 
 # Represents the state related to a single emoji
 mutable struct EmojiState
-	emoji::String
-	numclicks::Float64
-	bgcolor::String
+	emoji     :: String
+	numclicks :: Float64
+	bgcolor   :: String
 end
 
 # Build a list of emoji
@@ -15,13 +15,13 @@ for (i, e) in enumerate(["😁", "😃", "😆", "😎", "😈", "☹", "🌚", 
 end
 
 # path to the QML file
-qml_file = joinpath(dirname(@__FILE__), "qml", "grid.qml")
+qml_file = joinpath(@__DIR__, "qml", "grid.qml")
 
 # create the app, with cols and emojiModel exposed as QML context properties
 loadqml(qml_file, cols = 3, emojiModel = ListModel(emoji))
 
 # Start the GUI
-exec()
+# exec() #! Broken
 
 # Print the click summary after exit
 for e in emoji

@@ -24,14 +24,14 @@ function render()
 	vertices = Point2f0[(c.cx, c.cy) for c in corners] # note Float32
 
 	# Create the Vertex Buffer Object (VBO)
-	vbo = Ref(GLuint(0))   # initial value is irrelevant, just allocate space
+	vbo = Ref(GLuint(0)) # initial value is irrelevant, just allocate space
 	glGenBuffers(1, vbo)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[])
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW)
 
 	# The vertex shader
 	vertex_source = """
-	#version 150
+	# version 150
 
 	in vec2 position;
 
@@ -57,7 +57,7 @@ function render()
 
 	# Compile the vertex shader
 	vertex_shader = glCreateShader(GL_VERTEX_SHADER)
-	glShaderSource(vertex_shader, 1, srctoptr(vertex_source), C_NULL)  # nicer thanks to GLAbstraction
+	glShaderSource(vertex_shader, 1, srctoptr(vertex_source), C_NULL) # nicer thanks to GLAbstraction
 	glCompileShader(vertex_shader)
 	# Check that it compiled correctly
 	status = Ref(GLint(0))
@@ -92,8 +92,7 @@ function render()
 
 	# Link vertex data to attributes
 	pos_attribute = glGetAttribLocation(shader_program, "position")
-	glVertexAttribPointer(pos_attribute, length(eltype(vertices)),
-		GL_FLOAT, GL_FALSE, 0, C_NULL)
+	glVertexAttribPointer(pos_attribute, length(eltype(vertices)), GL_FLOAT, GL_FALSE, 0, C_NULL)
 	glEnableVertexAttribArray(pos_attribute)
 
 	# Set background
@@ -107,8 +106,9 @@ function render()
 end
 
 # Pass the triangle as a context property
-loadqml(joinpath(dirname(@__FILE__), "qml", "gltriangle.qml"),
+loadqml(joinpath(@__DIR__, "qml", "gltriangle.qml"),
 	cornersModel = ListModel(corners),
-	render_triangle = @safe_cfunction(render, Cvoid, ()))
+	render_triangle = @safe_cfunction(render, Cvoid, ()),
+)
 exec()
 
